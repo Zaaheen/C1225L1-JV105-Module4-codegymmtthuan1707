@@ -17,14 +17,14 @@ public class Calculator {
     private String errorMessage;
     private boolean success;
 
-//    public Calculator(double firstOperand, double secondOperand, String operator) {
-//        this.firstOperand = firstOperand;
-//        this.secondOperand = secondOperand;
-//        this.operator = operator;
-//    }
-    Calculator calc = Calculator.builder()
-            .firstOperand(firstOperand)
-            .secondOperand(secondOperand)
-            .operator(operator)
-            .build();
+    public Calculator(double firstOperand, double secondOperand, String operator) {
+        this.firstOperand = firstOperand;
+        this.secondOperand = secondOperand;
+        this.operator = operator;
+    }
+//    Calculator calc = Calculator.builder()
+//            .firstOperand(firstOperand)
+//            .secondOperand(secondOperand)
+//            .operator(operator)
+//            .build();
 }

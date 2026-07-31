@@ -41,7 +41,7 @@ public class CalculatorService {
         return calc;
     }
 
-//    public Calculator calculate(double firstOperand, double secondOperand, String operator) {
-//        return calculate(new Calculator(firstOperand, secondOperand, operator));
-//    }
+    public Calculator calculate(double firstOperand, double secondOperand, String operator) {
+        return calculate(new Calculator(firstOperand, secondOperand, operator));
+    }
 }
