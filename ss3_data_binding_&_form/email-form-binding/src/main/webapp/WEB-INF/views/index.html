@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cấu Hình Hòm Thư Điện Tử</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: #f8fafc; }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+<div class="w-full max-w-md bg-slate-900/90 backdrop-blur-xl rounded-3xl border border-slate-800 shadow-2xl p-6 sm:p-8 space-y-6">
+
+    <!-- Header -->
+    <div class="text-center space-y-2">
+        <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-indigo-600/20 text-indigo-400 border border-indigo-500/30">
+            <i class="fa-solid fa-gears text-2xl"></i>
+        </div>
+        <h1 class="text-2xl font-bold text-white">Cấu Hình Hòm Thư</h1>
+        <p class="text-xs text-slate-400">Thông tin thiết lập tài khoản email hiện tại</p>
+    </div>
+
+    <!-- Notification Message -->
+    <div th:if="${successMessage}" class="p-3 bg-emerald-950/80 border border-emerald-500/40 rounded-xl flex items-center gap-2.5 text-emerald-300 text-xs">
+        <i class="fa-solid fa-circle-check text-emerald-400"></i>
+        <span th:text="${successMessage}"></span>
+    </div>
+
+    <!-- Detail View -->
+    <div class="space-y-4 text-sm bg-slate-800/50 p-5 rounded-2xl border border-slate-700/60">
+        <div class="flex justify-between items-center border-b border-slate-700/60 pb-3">
+            <span class="text-slate-400 text-xs font-semibold uppercase">Ngôn ngữ (Language)</span>
+            <span class="font-bold text-indigo-300" th:text="${config.language}"></span>
+        </div>
+
+        <div class="flex justify-between items-center border-b border-slate-700/60 pb-3">
+            <span class="text-slate-400 text-xs font-semibold uppercase">Số thư/trang (Page Size)</span>
+            <span class="font-bold text-slate-200" th:text="${config.pageSize} + ' emails per page'"></span>
+        </div>
+
+        <div class="flex justify-between items-center border-b border-slate-700/60 pb-3">
+            <span class="text-slate-400 text-xs font-semibold uppercase">Lọc thư rác (Spams Filter)</span>
+            <span th:if="${config.spamsFilter}" class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                    <i class="fa-solid fa-shield-check mr-1"></i> Bật (Enable)
+                </span>
+            <span th:unless="${config.spamsFilter}" class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-rose-500/20 text-rose-300 border border-rose-500/30">
+                    <i class="fa-solid fa-shield-xmark mr-1"></i> Tắt (Disable)
+                </span>
+        </div>
+
+        <div>
+            <span class="text-slate-400 text-xs font-semibold uppercase block mb-1.5">Chữ ký email (Signature)</span>
+            <div class="p-3 bg-slate-900/80 rounded-xl text-slate-300 font-mono text-xs whitespace-pre-wrap border border-slate-800"
+                 th:text="${config.signature}"></div>
+        </div>
+    </div>
+
+    <!-- Action Button -->
+    <a th:href="@{/config/update}"
+       class="w-full bg-gradient-to-r from-indigo-500 to-sky-500 hover:from-indigo-400 hover:to-sky-400 text-white font-semibold py-3 px-4 rounded-xl transition duration-200 flex items-center justify-center gap-2 text-sm shadow-lg shadow-indigo-500/25">
+        <i class="fa-solid fa-pen-to-square"></i>
+        <span>Cập nhật cấu hình (Update)</span>
+    </a>
+
+</div>
+
+</body>
+</html>
