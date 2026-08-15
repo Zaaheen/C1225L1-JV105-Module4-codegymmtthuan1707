@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Chỉnh Sửa Bài Blog</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen p-8">
+<div class="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-md">
+    <h1 class="text-2xl font-bold mb-6 text-gray-800">Cập Nhật Bài Viết</h1>
+
+    <form th:action="@{/blogs/edit}" th:object="${blog}" method="post" class="space-y-4">
+        <!-- Hidden input lưu ID và CreatedAt -->
+        <input type="hidden" th:field="*{id}" />
+        <input type="hidden" th:field="*{createdAt}" />
+
+        <div>
+            <label class="block font-medium text-gray-700">Tiêu đề:</label>
+            <input type="text" th:field="*{title}" required class="w-full mt-1 p-2 border rounded-md focus:ring-blue-500 focus:border-blue-500">
+        </div>
+
+        <div>
+            <label class="block font-medium text-gray-700">Tác giả:</label>
+            <input type="text" th:field="*{author}" required class="w-full mt-1 p-2 border rounded-md focus:ring-blue-500 focus:border-blue-500">
+        </div>
+
+        <div>
+            <label class="block font-medium text-gray-700">Tóm tắt ngắn:</label>
+            <textarea th:field="*{summary}" rows="3" required class="w-full mt-1 p-2 border rounded-md focus:ring-blue-500 focus:border-blue-500"></textarea>
+        </div>
+
+        <div>
+            <label class="block font-medium text-gray-700">Nội dung bài viết:</label>
+            <textarea th:field="*{content}" rows="8" required class="w-full mt-1 p-2 border rounded-md focus:ring-blue-500 focus:border-blue-500"></textarea>
+        </div>
+
+        <div class="flex space-x-4 pt-4">
+            <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-md font-medium">Cập Nhật</button>
+            <a th:href="@{/blogs}" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-5 py-2 rounded-md font-medium">Hủy</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>
