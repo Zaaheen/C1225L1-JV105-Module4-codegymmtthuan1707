@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản Lý Danh Mục</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen p-8">
+<div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md">
+    <div class="flex justify-between items-center mb-6 border-b pb-4">
+        <h1 class="text-2xl font-bold text-gray-800">Quản Lý Danh Mục Bài Viết</h1>
+        <a th:href="@{/blogs}" class="text-blue-600 hover:underline font-medium">&larr; Về trang Blog</a>
+    </div>
+
+    <div th:if="${message}" class="bg-green-100 text-green-700 p-3 rounded mb-4" th:text="${message}"></div>
+
+    <!-- Form Thêm Danh Mục Mới -->
+    <form th:action="@{/categories/create}" th:object="${newCategory}" method="post" class="flex space-x-3 mb-6 bg-gray-50 p-4 rounded border">
+        <input type="text" th:field="*{name}" placeholder="Tên danh mục mới..." class="flex-1 border rounded px-3 py-2 focus:ring-2 focus:ring-purple-500" required>
+        <button type="submit" class="bg-purple-600 hover:bg-purple-700 text-white font-medium px-4 py-2 rounded">Thêm Mới</button>
+    </form>
+
+    <!-- Bảng danh sách Danh Mục -->
+    <table class="w-full border-collapse border rounded">
+        <thead>
+        <tr class="bg-gray-100 text-left text-gray-700">
+            <th class="border p-3">ID</th>
+            <th class="border p-3">Tên Danh Mục</th>
+            <th class="border p-3 text-center">Hành Động</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="cat : ${categories}" class="hover:bg-gray-50">
+            <td class="border p-3" th:text="${cat.id}">1</td>
+            <td class="border p-3 font-medium" th:text="${cat.name}">Công Nghệ</td>
+            <td class="border p-3 text-center space-x-2">
+                <a th:href="@{/categories/edit/{id}(id=${cat.id})}" class="text-amber-600 hover:underline">Sửa</a>
+                <a th:href="@{/categories/delete/{id}(id=${cat.id})}" onclick="return confirm('Xóa danh mục sẽ ảnh hưởng tới các bài viết thuộc danh mục này. Bạn có chắc chắn?')" class="text-red-600 hover:underline">Xóa</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

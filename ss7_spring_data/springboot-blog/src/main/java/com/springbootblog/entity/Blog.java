@@ -1,19 +1,15 @@
 package com.springbootblog.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "blogs")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "blogs")
 public class Blog {
 
     @Id
@@ -33,15 +29,12 @@ public class Blog {
 
     private LocalDateTime createdAt;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
+
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
-    }
-
-    public Blog(String title, String summary, String content, String author) {
-        this.title = title;
-        this.summary = summary;
-        this.content = content;
-        this.author = author;
     }
 }
