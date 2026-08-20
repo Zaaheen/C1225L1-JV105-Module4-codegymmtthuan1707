@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh Sách Bài Hát</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+<div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md">
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold text-gray-800">Ứng Dụng Nghe Nhạc - Quản Lý Bài Hát</h1>
+        <a th:href="@{/songs/create}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+            + Thêm Bài Hát Mới
+        </a>
+    </div>
+
+    <div th:if="${message}" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4" th:text="${message}"></div>
+    <div th:if="${error}" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4" th:text="${error}"></div>
+
+    <table class="w-full text-left border-collapse border">
+        <thead>
+        <tr class="bg-gray-200">
+            <th class="border p-3">STT</th>
+            <th class="border p-3">Tên Bài Hát</th>
+            <th class="border p-3">Nghệ Sĩ</th>
+            <th class="border p-3">Thể Loại</th>
+            <th class="border p-3">Thao Tác</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="s, stat : ${songs}" class="hover:bg-gray-50">
+            <td class="border p-3" th:text="${stat.count}">1</td>
+            <td class="border p-3 font-semibold text-blue-900" th:text="${s.name}"></td>
+            <td class="border p-3" th:text="${s.artist}"></td>
+            <td class="border p-3" th:text="${s.genre}"></td>
+            <td class="border p-3">
+                <a th:href="@{/songs/edit/{id}(id=${s.id})}" class="text-amber-600 hover:underline font-medium">Chỉnh Sửa</a>
+            </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(songs)}">
+            <td colspan="5" class="text-center p-4 text-gray-500">Chưa có bài hát nào trong danh sách.</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

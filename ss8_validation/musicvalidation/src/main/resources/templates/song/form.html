@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${song.id == null ? 'Thêm Mới Bài Hát' : 'Cập Nhật Bài Hát'}"></title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+<div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
+    <!-- Tiêu đề thay đổi động dựa vào ID -->
+    <h2 class="text-xl font-bold mb-6 text-gray-800"
+        th:text="${song.id == null ? 'Thêm Mới Bài Hát' : 'Cập Nhật Bài Hát'}">
+    </h2>
+
+    <!-- Action submit gửi về /songs/save chung -->
+    <form th:action="@{/songs/save}" th:object="${song}" method="post" class="space-y-4">
+        <!-- Hidden Input lưu ID (Tự động null khi thêm mới, có giá trị khi chỉnh sửa) -->
+        <input type="hidden" th:field="*{id}">
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Tên bài hát:</label>
+            <input type="text" th:field="*{name}" class="mt-1 w-full border rounded p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Nhập tên bài hát...">
+            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-red-500 text-xs mt-1"></p>
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Nghệ sĩ thể hiện:</label>
+            <input type="text" th:field="*{artist}" class="mt-1 w-full border rounded p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Nhập tên nghệ sĩ...">
+            <p th:if="${#fields.hasErrors('artist')}" th:errors="*{artist}" class="text-red-500 text-xs mt-1"></p>
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Thể loại (phân cách bằng dấu phẩy):</label>
+            <input type="text" th:field="*{genre}" class="mt-1 w-full border rounded p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Pop, Ballad, R&B...">
+            <p th:if="${#fields.hasErrors('genre')}" th:errors="*{genre}" class="text-red-500 text-xs mt-1"></p>
+        </div>
+
+        <div class="flex space-x-3 pt-4">
+            <button type="submit"
+                    th:class="${song.id == null ? 'bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded' : 'bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded'}"
+                    th:text="${song.id == null ? 'Thêm Bài Hát' : 'Lưu Thay Đổi'}">
+            </button>
+            <a th:href="@{/songs}" class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400">Hủy</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>
