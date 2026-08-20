@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Đăng Ký Tài Khoản</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-6">
+<div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+    <h2 class="text-2xl font-bold text-center text-blue-600 mb-6">Form Đăng Ký Tài Khoản</h2>
+
+    <form th:action="@{/register}" th:object="${user}" method="post" class="space-y-4">
+
+        <!-- First Name -->
+        <div>
+            <label class="block text-sm font-medium text-gray-700">First Name:</label>
+            <input type="text" th:field="*{firstName}"
+                   class="mt-1 block w-full rounded-md border-gray-300 border p-2 focus:ring-blue-500 focus:border-blue-500">
+            <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="text-red-500 text-xs mt-1"></p>
+        </div>
+
+        <!-- Last Name -->
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Last Name:</label>
+            <input type="text" th:field="*{lastName}"
+                   class="mt-1 block w-full rounded-md border-gray-300 border p-2 focus:ring-blue-500 focus:border-blue-500">
+            <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="text-red-500 text-xs mt-1"></p>
+        </div>
+
+        <!-- Phone Number -->
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Phone Number:</label>
+            <input type="text" th:field="*{phoneNumber}" placeholder="0912345678"
+                   class="mt-1 block w-full rounded-md border-gray-300 border p-2 focus:ring-blue-500 focus:border-blue-500">
+            <p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}" class="text-red-500 text-xs mt-1"></p>
+        </div>
+
+        <!-- Age -->
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Age:</label>
+            <input type="number" th:field="*{age}"
+                   class="mt-1 block w-full rounded-md border-gray-300 border p-2 focus:ring-blue-500 focus:border-blue-500">
+            <p th:if="${#fields.hasErrors('age')}" th:errors="*{age}" class="text-red-500 text-xs mt-1"></p>
+        </div>
+
+        <!-- Email -->
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Email:</label>
+            <input type="text" th:field="*{email}" placeholder="example@domain.com"
+                   class="mt-1 block w-full rounded-md border-gray-300 border p-2 focus:ring-blue-500 focus:border-blue-500">
+            <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-red-500 text-xs mt-1"></p>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit"
+                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md transition duration-200">
+            Đăng Ký
+        </button>
+    </form>
+</div>
+</body>
+</html>
