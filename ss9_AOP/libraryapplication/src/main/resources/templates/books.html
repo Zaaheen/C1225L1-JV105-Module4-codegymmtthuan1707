@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Thư Viện Sách Số</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col justify-between">
+
+<!-- Header Navbar -->
+<nav class="bg-indigo-700 text-white shadow-lg">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+        <a th:href="@{/library}" class="text-xl font-bold tracking-wide">📚 Thư Viện Sách Số</a>
+        <a th:href="@{/library/return}" class="bg-amber-500 hover:bg-amber-600 px-4 py-2 rounded-lg font-semibold transition text-white shadow">
+            ↩️ Trả Sách
+        </a>
+    </div>
+</nav>
+
+<main class="max-w-6xl mx-auto px-4 py-8 flex-grow w-full">
+
+    <!-- BANNER THÔNG BÁO MƯỢN SÁCH THÀNH CÔNG (Hiển thị khi borrowTicketCode != null) -->
+    <div th:if="${borrowTicketCode}" class="bg-green-50 border-2 border-green-500 rounded-xl p-6 mb-8 text-center shadow-lg">
+        <div class="text-4xl mb-2">🎉</div>
+        <h2 class="text-2xl font-extrabold text-green-800 mb-1">Mượn Sách Thành Công!</h2>
+        <p class="text-gray-700 mb-4">Bạn đã mượn cuốn: <strong class="text-indigo-600" th:text="${borrowedBook.title}"></strong></p>
+        <div class="inline-block bg-amber-100 border-2 border-amber-400 px-6 py-3 rounded-xl mb-2">
+            <span class="text-xs text-amber-800 font-bold block uppercase">Mã Phiếu Mượn Của Bạn</span>
+            <span class="text-3xl font-mono font-extrabold text-amber-600 tracking-widest" th:text="${borrowTicketCode}">04829</span>
+        </div>
+        <p class="text-xs text-gray-500">Hãy lưu mã 5 chữ số này lại để thực hiện trả sách sau này.</p>
+    </div>
+
+    <!-- POPUP / MODAL CHI TIẾT SÁCH (Hiển thị khi selectedBook != null) -->
+    <div th:if="${selectedBook}" class="mb-8 bg-white border-2 border-indigo-200 rounded-xl p-6 shadow-md">
+        <div class="flex justify-between items-start mb-4">
+            <div>
+                <h2 class="text-2xl font-extrabold text-gray-900" th:text="${selectedBook.title}">Tên sách</h2>
+                <p class="text-sm text-gray-500">Tác giả: <strong th:text="${selectedBook.author}">Tác giả</strong></p>
+            </div>
+            <a th:href="@{/library/books}" class="text-gray-400 hover:text-gray-600 font-bold text-xl">&times; Quay lại</a>
+        </div>
+        <div class="bg-gray-50 p-4 rounded-lg text-gray-700 text-sm mb-4 leading-relaxed" th:text="${selectedBook.description}">Mô tả nội dung...</div>
+        <div class="flex justify-between items-center pt-2">
+                <span th:class="${selectedBook.quantity > 0 ? 'text-green-600 font-bold' : 'text-red-500 font-bold'}"
+                      th:text="${selectedBook.quantity > 0 ? 'Còn ' + selectedBook.quantity + ' cuốn' : 'HẾT SÁCH'}">
+                </span>
+            <form th:action="@{/library/borrow/{id}(id=${selectedBook.id})}" method="post">
+                <button type="submit" th:disabled="${selectedBook.quantity <= 0}"
+                        th:class="${selectedBook.quantity > 0 ? 'bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-2 rounded-lg' : 'bg-gray-300 text-gray-500 cursor-not-allowed font-bold px-6 py-2 rounded-lg'}">
+                    Xác Nhận Mượn
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- DANH SÁCH SÁCH -->
+    <h1 class="text-2xl font-bold text-gray-800 mb-6">Danh Mục Đầu Sách</h1>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div th:each="b : ${books}" class="bg-white rounded-xl shadow p-5 border flex flex-col justify-between hover:shadow-md transition">
+            <div>
+                <h3 class="text-lg font-bold text-gray-900 mb-1" th:text="${b.title}">Tên sách</h3>
+                <p class="text-xs text-gray-500 mb-3">Tác giả: <span th:text="${b.author}"></span></p>
+                <p class="text-gray-600 text-sm mb-4 line-clamp-2" th:text="${b.description}"></p>
+            </div>
+            <div class="pt-3 border-t flex justify-between items-center">
+                    <span th:class="${b.quantity > 0 ? 'text-green-600 font-bold text-sm' : 'text-red-500 font-bold text-sm'}"
+                          th:text="${b.quantity + ' cuốn'}">
+                    </span>
+                <a th:href="@{/library/detail/{id}(id=${b.id})}" class="bg-indigo-50 text-indigo-600 hover:bg-indigo-100 font-semibold px-3 py-1.5 rounded-md text-xs">
+                    Chi Tiết / Mượn
+                </a>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="bg-gray-800 text-gray-400 py-4 text-center text-xs mt-12">
+    <p>© 2026 Library Management System. Spring Boot Clean Architecture.</p>
+</footer>
+</body>
+</html>

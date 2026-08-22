@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Lỗi Thao Tác Thư Viện</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col justify-between">
+
+<nav class="bg-indigo-700 text-white shadow-lg">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+        <a th:href="@{/library}" class="text-xl font-bold tracking-wide">📚 Thư Viện Sách Số</a>
+    </div>
+</nav>
+
+<main class="max-w-md mx-auto px-4 py-12 flex-grow text-center">
+    <div class="bg-white p-8 rounded-xl shadow-lg border border-red-200">
+        <div class="w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto text-3xl font-bold mb-4">
+            ⚠️
+        </div>
+
+        <h1 class="text-xl font-extrabold text-red-600 mb-1" th:text="${errorType}">Thông Báo Lỗi</h1>
+        <p class="text-gray-700 my-4 p-4 bg-red-50 rounded-lg border border-red-100 text-sm leading-relaxed" th:text="${errorMessage}">
+            Chi tiết lỗi...
+        </p>
+
+        <div class="space-x-3 pt-2">
+            <a th:href="@{/library/books}" class="inline-block bg-gray-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-700 transition">
+                Về Trang Chủ
+            </a>
+            <a th:href="@{/library/return}" class="inline-block bg-amber-500 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-amber-600 transition">
+                Thử Lại Trả Sách
+            </a>
+        </div>
+    </div>
+</main>
+
+<footer class="bg-gray-800 text-gray-400 py-4 text-center text-xs mt-12">
+    <p>© 2026 Library Management System.</p>
+</footer>
+</body>
+</html>
