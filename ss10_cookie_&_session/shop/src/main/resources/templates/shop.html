@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh Sách Sản Phẩm - Shop Hoa Tươi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8 min-h-screen">
+<div class="max-w-6xl mx-auto">
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-8 bg-white p-4 rounded-lg shadow">
+        <h1 class="text-2xl font-extrabold text-red-800 tracking-wide uppercase">DANH SÁCH SẢN PHẨM</h1>
+        <a th:href="@{/shopping-cart}" class="bg-red-600 hover:bg-red-700 text-white font-bold px-5 py-2.5 rounded-lg shadow transition flex items-center gap-2">
+            🛒 Giỏ hàng
+            <span class="bg-white text-red-600 px-2 py-0.5 rounded-full text-xs font-black"
+                  th:text="${session.cart != null ? session.cart.countProductQuantity() : 0}">0</span>
+        </a>
+    </div>
+
+    <!-- Thông báo -->
+    <div th:if="${message}" class="bg-green-100 border border-green-400 text-green-800 p-4 rounded-lg mb-6 text-center font-medium" th:text="${message}"></div>
+
+    <!-- Lưới sản phẩm -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+        <div th:each="p : ${products}" class="bg-white border rounded-xl shadow-sm overflow-hidden hover:shadow-md transition relative flex flex-col justify-between">
+
+            <!-- Tag NEW! góc phải -->
+            <span class="absolute top-0 right-0 bg-red-600 text-white text-xs font-black px-3 py-1 shadow transform translate-x-1 -translate-y-0 uppercase">NEW!</span>
+
+            <a th:href="@{/detail/{id}(id=${p.id})}" class="p-4 block">
+                <img th:src="${p.image}" class="w-full h-48 object-cover rounded-lg mb-4 hover:scale-105 transition duration-300">
+            </a>
+
+            <div class="p-4 pt-0 border-t flex-grow flex flex-col justify-between text-center">
+                <a th:href="@{/detail/{id}(id=${p.id})}" class="font-bold text-gray-800 hover:text-red-600 line-clamp-1 mb-2" th:text="${p.name}">Tên sản phẩm</a>
+                <div>
+                    <span th:if="${p.oldPrice != null}" class="line-through text-gray-400 text-sm mr-2" th:text="${#numbers.formatDecimal(p.oldPrice, 0, 'COMMA', 0, 'POINT')} + ' đ'"></span>
+                    <span class="text-red-600 font-extrabold text-lg" th:text="${#numbers.formatDecimal(p.newPrice, 0, 'COMMA', 0, 'POINT')} + ' đ'"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
