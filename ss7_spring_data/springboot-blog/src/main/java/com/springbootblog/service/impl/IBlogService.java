@@ -19,4 +19,6 @@ public interface IBlogService {
     Blog save(Blog blog);
 
     void remove(Long id);
+
+    List<Blog> findAllByCategoryId(Long categoryId);
 }

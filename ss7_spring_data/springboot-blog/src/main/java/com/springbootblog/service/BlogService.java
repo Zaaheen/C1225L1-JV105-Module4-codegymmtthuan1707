@@ -7,12 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class BlogService implements IBlogService {
+
     @Autowired
     private IBlogRepository blogRepository;
 
@@ -43,16 +45,12 @@ public class BlogService implements IBlogService {
 
     @Override
     public Page<Blog> searchBlogs(String keyword, Long categoryId, Pageable pageable) {
-        boolean hasKeyword = keyword != null && !keyword.trim().isEmpty();
-        boolean hasCategory = categoryId != null && categoryId > 0;
+        String cleanKeyword = StringUtils.hasText(keyword) ? keyword.trim() : null;
+        return blogRepository.searchBlogs(cleanKeyword, categoryId, pageable);
+    }
 
-        if (hasKeyword && hasCategory) {
-            return blogRepository.findByTitleContainingAndCategoryId(keyword.trim(), categoryId, pageable);
-        } else if (hasKeyword) {
-            return blogRepository.findByTitleContaining(keyword.trim(), pageable);
-        } else if (hasCategory) {
-            return blogRepository.findByCategoryId(categoryId, pageable);
-        }
-        return blogRepository.findAll(pageable);
+    @Override
+    public List<Blog> findAllByCategoryId(Long categoryId) {
+        return blogRepository.findAllByCategoryId(categoryId);
     }
 }
